@@ -127,8 +127,62 @@ for i in 1:100
     push!(eventos,evento_aleatorio(0.1))
 end
 
-count(eventos)
+evento = evento_aleatorio(0.5)
+
 
 #
 # Hacer una funcion caminante aleatorio que nos diga la nueva posicion del caminante con parametro p
+#
+function caminante_aleatorio(p,pasos)
+    ev = Int32[]
+    for i in 1:pasos
+        if( evento_aleatorio(p) )
+            push!(ev,1 )
+        else
+            push!(ev,-1 )
+        end
+    end
+    return ev
+end
+
+eventos = caminante_aleatorio(0.5, 100)
+
+
+sum(eventos)
+
+# Graficos
+#
+using Plots
+plot(eventos)
+scatter!(eventos)
+
+#
+#
+# \lambda + TAB
+# N\_0   + TAB
+
+function crec_exp(λ,N₀,tfinal)    # asume intervalo de tiempo = 1
+    pop = [N₀]
+
+    for t in 1:tfinal-1
+        pop1 = pop[t] + λ * pop[t]
+        push!(pop, pop1)
+    end
+    return pop
+end
+
+
+p1 = crec_exp(0.1, 1.0, 100)
+plot(p1)    
+p2 = crec_exp(0.15, 1.0, 100)
+plot!(p2)
+p3 = crec_exp(0.015, 1.0, 1000)
+plot!(p3)
+
+#
+# 
+#  Ejercicio Crecimiento exponencial deterministico discreto 
+#  con intervalo de tiempo h variable
+#  Subirlo a el repositorio de Github
+#
 #
