@@ -101,3 +101,34 @@ for i in 1:10
         @info "Falso"
     end
 end
+
+#
+# funciones
+# 
+
+function evento_aleatorio(p)
+    if rand() < p
+        return true
+    else
+        return false
+    end
+end
+
+eventos = Bool[]
+length(eventos)
+
+push!(eventos, false)
+length(eventos)
+
+
+eventos = Bool[]
+
+for i in 1:100
+    push!(eventos,evento_aleatorio(0.1))
+end
+
+count(eventos)
+
+#
+# Hacer una funcion caminante aleatorio que nos diga la nueva posicion del caminante con parametro p
+#
