@@ -82,20 +82,50 @@ plot(c4)
 
 # Crear una funcion para calcular la distribución exponencial con tasa λ
 
-n = 10000
-de = zeros(n)
-λ = .1
-for i in 1:n
-    de[i] = - log(rand())/λ
+function distr_exp(λ)
+    n = 10000
+    de = zeros(n)
+    λ = .1
+    for i in 1:n
+        de[i] = - log(rand())/λ
+    end
+    return de
 end
 
+de = distr_exp(.05)
 ## Para graficar la densidad de la distribucion 
+plot(de)
 
 using StatsPlots
+density(de)
 
 
+function crec_exp_sto(λ,N₀,tfinal)    
+    pop = [N₀]                        # Vector para la poblacion
+    ts  = [0.0]                       # Vector de valores de tiempo
+    i = 1                             # variable indice
+    t = 0.0                           # variable auxiliar de tiempo
+    while t <= tfinal
+        #@info "Tiempo $(t) indice $(i)"
+
+        B = pop[i]*λ
+        t = ts[i] - log(rand()) / B
+        pop1 = pop[i] + 1
+        i += 1                  
+        push!(pop, pop1)
+        push!(ts,t)
+    end
+    return ts,pop
+end
 
 
+s1 = crec_exp_sto(0.1,1.0,100)
+c1 = crec_exp(0.1,1.0,100,0.001)
+
+plot(s1)
+plot!(c1)
+s2 = crec_exp_sto(0.1,1.0,100)
+plot!(s2)
 
 
 ## 
