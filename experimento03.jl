@@ -44,6 +44,20 @@ plot(p1, legend=false)
 
 # Simulación crecimiento muerte estocástica
 #
+"""
+    nac_mue_det(par, fin_t, N₀,h)
+
+Simula el proceso de nacimiento muerte 
+
+## Argumentos
+- `par::Tuple{Float64, Float64}`: Tupla de parámetros de crecimiento, tasa de crecimiento, tasa de mortalidad
+- `fin_t::Float64`: tiempo de simulación
+- `N₀::Float64`: población inicial.
+
+## Retorno
+- `tiempo::Vector{Float64}`: Vector de tiempo simulado.
+- `poblacion::Vector{Float64}`: Vector de la población simulada en función del tiempo.
+"""
 function nac_mue_sto(par,N₀,tfinal)    
     λ , μ = par                       # desempaquetamos los parámetros
     
