@@ -85,14 +85,13 @@ plot(c4)
 function distr_exp(λ)
     n = 10000
     de = zeros(n)
-    λ = .1
     for i in 1:n
         de[i] = - log(rand())/λ
     end
     return de
 end
 
-de = distr_exp(.05)
+de = distr_exp(1/5)
 ## Para graficar la densidad de la distribucion 
 plot(de)
 
@@ -133,20 +132,7 @@ plot!(s2)
 #
 #  Usamos la misma funcion agregando otro parametro
 #
+tmax = 5; tmin=2;
+tt=1:24
 
 
-
-## 
-# Crecimiento y muerte
-#
-
-
-
-## 
-# Crecimiento logistico 
-#
-
-
-## 
-# Crecimiento logistico + cosecha
-#
