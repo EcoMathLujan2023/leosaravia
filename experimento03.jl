@@ -128,5 +128,9 @@ plot!(p4)
 
 
 ## 
-# Crecimiento logistico + cosecha
+# Ejercicio
+#
+# 1) Crecimiento logístico deterministica
+#
+# 2) Crecimiento logistico estocástico + cosecha
 #
