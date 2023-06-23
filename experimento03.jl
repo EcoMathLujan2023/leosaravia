@@ -101,7 +101,7 @@ plot!(p2)
 
 
 ## 
-# Crecimiento logistico 
+# Crecimiento logistico estocástico
 #
 #  dpop = λ pop (1 - pop / K  )  = λ pop -  pop * pop * λ / K 
 #
@@ -148,3 +148,5 @@ plot!(p4)
 #
 # 2) Crecimiento logistico estocástico + cosecha
 #
+
+
