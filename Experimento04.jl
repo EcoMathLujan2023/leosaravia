@@ -171,11 +171,62 @@ plot(0:0.1:10,valor_eq)
 # dP = c N P - d P 
 #
 # a = Tasa de ingreso de Nutrientes
-# b = Consuma de Nutrientes por la poblacion P
+# b = Consumo de Nutrientes por la población P
 # e = Tasa de degradacion de Nutrientes
 #
 # c = Tasa de asimilación c < b
 # d = Mortalidad de la poblacion
 
 
+# Crecimiento Nutrientes-Poblacion con cosecha 
+#
+function nutri_phyto_det(par,ini,tfinal, h=1.0)  
+    a , b , e, c, d  = par                       # desempaquetamos los parámetros
+    P₀, N₀ = ini                                 # desempaquetamos los valores iniciales
+    N = Float64[N₀]                              # Forzamos variable a Float64 (numero real)
+    P = Float64[P₀]
+    ts  = [0.0]
+    i = 1
+    t = 0.0
+    #@info "N[1] $(N[i]) indice $(i)"
 
+    while t <= tfinal
+        N1 = N[i] + h * ( a - b * P[i] * N[i] - e *N[i] )
+        P1 = P[i] + h * ( c * N[i] * P[i] - d * P[i]) 
+        #@info "N1 $(N1) indice $(i)"
+        t = ts[i] + h
+        i += 1                   # equivale a i = i + 1 
+        if N1 < 0.0
+            N1 = 0.0
+        end
+
+        push!(N, N1)
+        push!(P, P1)
+        push!(ts,t)
+    end
+    return ts,N,P
+end
+
+a = 0.01     # g/m3/dia
+b = 2
+e = 0.001    # 1/m3/dia
+c = 0.8      # mg/m3/dia 
+d = 0.1 
+tfinal = 1000
+
+t, N, P = nutri_phyto_det([a,b,e,c,d],[1,1],tfinal, 0.01)  
+
+plot(t,N, label="N")
+plot!(t,P, label="P")
+
+
+#
+# Ejercicio
+#
+# 1) Igualar a cero las ecuaciones para sacar de 
+# forma analitica los puntos de equilibrio
+#
+# 2) Hacer un grafico de bifurcaciones
+#
+# 3) Hacer la versión estocástica
+#
