@@ -182,7 +182,7 @@ plot(0:0.1:10,valor_eq)
 #
 function nutri_phyto_det(par,ini,tfinal, h=1.0)  
     a , b , e, c, d  = par                       # desempaquetamos los parámetros
-    P₀, N₀ = ini                                 # desempaquetamos los valores iniciales
+    N₀,P₀  = ini                                 # desempaquetamos los valores iniciales
     N = Float64[N₀]                              # Forzamos variable a Float64 (numero real)
     P = Float64[P₀]
     ts  = [0.0]
