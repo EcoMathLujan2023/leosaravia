@@ -121,8 +121,12 @@ end
 
 
 "Distancia euclidiana entre datos y simulaciones"
-function distance(data::Vector{Float64},simulation::Vector{Float64})
-    return sqrt(sum((data.-simulation).^2.0))
+function distance(data::Vector{Float64}, simulation::Vector{Float64})
+    filtered_data = [data[i] for i in 1:length(data) if data[i] != 0]    # for loop = array comprehension
+
+    filtered_simulation = [simulation[i] for i in 1:length(simulation) if data[i] != 0]
+
+    return sqrt(sum((filtered_data .- filtered_simulation).^2.0))
 end
 
 "Computación Bayesiana Aproximada"
@@ -134,7 +138,9 @@ function ABC_nutri_phyto(data,deltaP,umbral)
 
     while exitos < size(params, 2)
         intentos += 1
-
+        if intentos > 1000
+            break
+        end
         t_a = rand(δa)
         t_b = rand(δb)
         t_e = rand(δe)
@@ -147,7 +153,13 @@ function ABC_nutri_phyto(data,deltaP,umbral)
 
             t, N, P = nutri_phyto_sto([t_a,t_b,t_e,t_c,t_d],[Neq,Peq],100)
             l_data = size(data,1)-1
+
+            #sol = simulate_np([t_a,t_b,t_e,t_c,t_d],[Neq,Peq],(0,tfinal))
+            #tsamp = tfinal-l_data:1:tfinal
+            #out = reduce(hcat,sol.(tsamp))
+            #P = out[2,:]
             score = distance(data,P[end-l_data:end])
+            @info "Score $(score)"
             if score < umbral
                 exitos += 1
                 params[:,exitos] .= [t_a,t_b,t_e,t_c,t_d ]
